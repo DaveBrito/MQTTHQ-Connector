@@ -4,24 +4,31 @@ Este projeto demostra como conectar um ESP32 a uma rede WI-FI, para realizar a l
 Desenvolvimento realizado através de IDE online, Wokwi usado para Arduino e MQTTHQ para o Broker utilizado nesse projeto.
 
 
-# Requisitos de Software
+# Requisitos de Software:
 - [Arduino IDE](https://wokwi.com/)
 - [Broker MQTT ](https://mqtthq.com/client)
 - Bibliotecas: WiFi, Wire, ArduinoJson, PubSubClient, LiquidCrystal_I2C, DHT
 
 # Instruções de Configuração:
 1. Conecte o ESP32 à rede Wi-Fi.
-2. Configure o Broker MQTT com as credenciais adequadas.
+2. Configure o Broker MQTT com as credenciais adequadas no tópico.
 3. Instale as bibliotecas listadas no arquivo `libraries.txt`.
 4. Abra o projeto no Wokwi e faça os ajustes necessários.
 5. Carregue o código no ESP32 e inicie o monitor serial para verificar a conexão e os dados do sensor.
 
    
-# Funcionamento
+# Funcionamento:
 - O ESP32 conecta-se à rede Wi-Fi especificada.
 - O sensor DHT22 é usado para ler a temperatura e umidade.
 - As leituras são publicadas no broker MQTT e também são exibidas localmente.
 - O ESP32 também pode receber mensagens do broker, que podem ser exibidas no dispositivo conectado.
+
+
+# Testes e Verificação 
+- Caso seja feito a conexão correta, deve ser espelhado os valores exibido no display, ser mostrado no Broker.
+<img src="https://github.com/DaveBrito/MQTTHQ-Connector/raw/main/mqtthq.png" width="90%" height="90%">
+
+
 
 # Observações:
 Este código é uma demonstração e pode precisar de ajustes para funcionar em sua configuração específica.
