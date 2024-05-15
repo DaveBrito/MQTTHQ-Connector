@@ -12,19 +12,21 @@
 #define MQTT_PASSWORD  ""
 #define MQTT_TOPIC     "mqttHQ-client-testt"
 
-// Pinos do LCD
+// Definições dos pinos do LCD
 #define SDA_PIN        21
 #define SCL_PIN        22
 #define DHT_PIN        15
 
-WiFiClient espClient;
-PubSubClient client(espClient);
+// Objetos de comunicação WI-FI no dispositivo ESP32.
+WiFiClient espClient;   // Comunica com o WI-FI
+PubSubClient client(espClient);   // Comunica com o MQTT usando o espClient acima.
 
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Endereço I2C e tamanho do LCD
-DHT dht(DHT_PIN, DHT22);
+DHT dht(DHT_PIN, DHT22);    // cria objeto sensor DHT22
 
+// callback executa quando uma mensagem é recebida no tópico das configurações iniciais.
 void callback(char* topic, byte* payload, unsigned int length) {
-  lcd.clear();
+  lcd.clear();  //limpa tela do LCD
   lcd.setCursor(0, 0);
   lcd.print("Mensagem recebida:");
   lcd.setCursor(0, 1);
@@ -35,7 +37,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     message += (char)payload[i];
   }
 
-  // Parsear a string JSON para obter os valores de temperatura e umidade
+  // Analisa a string JSON para obter os valores de temperatura e umidade
   StaticJsonDocument<200> doc;
   DeserializationError error = deserializeJson(doc, message);
   if (error) {
@@ -57,11 +59,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 
 void setup() {
+  //Taxa de baud para comunicação serial.
   Serial.begin(115200);
 
   // Inicialização do LCD
   lcd.init();
   lcd.backlight();
+   // Exibe "Conectando wi-fi ...." enquanto se conecta ao Wi-Fi
   lcd.setCursor(0, 0);
   lcd.print("Conectando");
   lcd.setCursor(0, 1);
@@ -72,14 +76,14 @@ void setup() {
     delay(500);
     lcd.print(".");
   }
-
+  // Exibe "Conectando MQTT ...." enquanto se conecta ao MQTT
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Conectando");
   lcd.setCursor(0, 1);
   lcd.print("MQTT ....");
 
-  client.setServer(MQTT_BROKER, 1883); // Configura o servidor MQTT e a porta
+  client.setServer(MQTT_BROKER, 1883); // Configura o servidor MQTT e a port
   client.setCallback(callback);
 }
 
